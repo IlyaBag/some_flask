@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+{% if session %}
+<h2>{{ session.get('logged_user') }}</h2>
+<form action="/logout" method="post" style="margin-bottom: 20px">
+    <input type="submit" value="logout">
+</form>
+{% else %}
+<form action="/login" style="margin-bottom: 20px">
+    <input type="submit" value="login">
+</form>
+{% endif %}
+    
+<form action="/users">
+    <input type="search" name="term">
+    <input type="submit">
+</form>
+
+<hr>
+
+{% if messages %}
+    {% for category, message in messages %}
+    <div class="{{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<ul>
+    {% for user in users %}
+    <li>
+        {% for k, v in user.items() %}
+            {% if k == "nickname" %}
+            {{ k }}: <a href="{{ url_for("get_user", id=user.id) }}">{{ v }}</a> <br>
+            {% else %}
+            {{ k }}: {{ v }} <br>
+            {% endif %}
+            {% endfor %}
+            <a href="{{ url_for('get_delete_user', id=user.id)}}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<div>
+    <button>
+        <a href="/users/new">Create new user</a>
+    </button>
+</div>
+
+</body>
+</html>

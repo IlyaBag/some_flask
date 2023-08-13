@@ -1,0 +1,16 @@
+<h1>Login</h1>
+<!-- {% if messages %}
+    {% for category, message in messages %}
+    <div class="{{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endif %} -->
+<form action="/login" method="post">
+  <label>
+    Enter your email
+    <div><input type="email" name="login" value="{{ email_to_login }}"></div>
+    {% if errors %}
+      <div>{{ errors.no_user }}</div>
+    {% endif %}
+    <div><input type="submit" value="login"></div>
+  </label>
+</form>
